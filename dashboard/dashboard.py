@@ -14,6 +14,11 @@ with st.sidebar:
     start_date = st.date_input("Mulai Tanggal", pd.to_datetime(rental_df['dteday']).min())
     end_date = st.date_input("Akhir Tanggal", pd.to_datetime(rental_df['dteday']).max())
 
+filtered_df = rental_df[
+    (pd.to_datetime(rental_df['dteday']) >= pd.to_datetime(start_date)) &
+    (pd.to_datetime(rental_df['dteday']) <= pd.to_datetime(end_date))
+]
+
 st.header("Bike Sharing Analysis")
 
 st.subheader("Bagaimana cuaca mempengaruhi rental sepeda?")
@@ -61,7 +66,7 @@ Jumlah penyewaan sepeda bervariasi berdasarkan musim. Musim panas mencatat jumla
 
 st.subheader("Apakah jumlah peminjam sepeda meningkat dari tahun 2011 ke 2012?")
 
-monthly_rentals = rental_df.groupby(['yr', 'mnth'])['cnt'].sum().reset_index()
+monthly_rentals = filtered_df.groupby(['yr', 'mnth'])['cnt'].sum().reset_index()
 
 monthly_rentals['month_label'] = monthly_rentals['mnth'].apply(
     lambda x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][x - 1]
