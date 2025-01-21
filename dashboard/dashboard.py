@@ -10,6 +10,10 @@ with st.sidebar:
     st.write("Istia Budi")
     st.write("istiabudi@gmail.com")
 
+    st.write("### Filter Data")
+    start_date = st.date_input("Mulai Tanggal", pd.to_datetime(rental_df['dteday']).min())
+    end_date = st.date_input("Akhir Tanggal", pd.to_datetime(rental_df['dteday']).max())
+
 st.header("Bike Sharing Analysis")
 
 st.subheader("Bagaimana cuaca mempengaruhi rental sepeda?")
